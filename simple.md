@@ -61,27 +61,44 @@ df.head(); df.info(); df.describe(); df.isnull().sum()
 df['X'] = df['X'].fillna(df['X'].median())
 df = pd.get_dummies(df.drop('Y', axis=1), columns=['Z'])
 pd.crosstab(df['A'], df['B'])
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import numpy as np
 
-# Matplotlib
-plt.plot(x, y)          # Line
-plt.scatter(x, y)       # Scatter
-plt.bar(cats, vals)     # Bar
-plt.hist(x, bins=10)    # Histogram
+# --- DUMMY DATA SETUP ---
+data = {
+    'C': ['A', 'A', 'B', 'B', 'C', 'C'], # str
+    'N': [10, 15, 40, 45, 20, 25],       # (Integers)
+    'X': [1, 2, 3, 4, 5, 6],            # (X-axis)
+    'Y': [2, 4, 1, 5, 3, 6]              # (Y-axis)
+}
+df = pd.DataFrame(data)
+x_list, y_list = [1, 2, 3], [10, 20, 15]   # Simple lists for Matplotlib
+
+# 1. MATPLOTLIB: Signature (List/Series, List/Series)
+plt.bar(x_list, y_list)      
+plt.plot(x_list, y_list)     
+plt.scatter(x_list, y_list)  
+plt.hist(y_list, bins=3)     
 plt.show()
 
-# Seaborn (Relational & Categorical)
-sns.lineplot(x=x, y=y, data=df)
-sns.scatterplot(x=x, y=y, data=df)
-sns.barplot(x=cat, y=num, data=df)
-sns.countplot(x=cat, data=df)
-sns.boxplot(x=cat, y=num, data=df)
-sns.violinplot(x=cat, y=num, data=df)
 
-# Seaborn (Distributions)
-sns.histplot(data, kde=True)
-sns.displot(data)
-sns.kdeplot(data)
-sns.ecdfplot(data)
+sns.lineplot(x='X', y='Y', data=df)
+sns.scatterplot(x='X', y='Y', data=df)
+sns.barplot(x='C', y='N', data=df)
+sns.boxplot(x='C', y='N', data=df)
+sns.violinplot(x='C', y='N', data=df)
+
+
+sns.countplot(x='C', data=df) 
+
+
+# Focuses on a single variable's spread
+sns.histplot(df['N'], kde=True)   
+sns.kdeplot(df['N'])              
+sns.ecdfplot(df['N'])             
+sns.displot(data=df, x='N', kind='hist') 
 ```
 
 ## 4. Supervised Learning
